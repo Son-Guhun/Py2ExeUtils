@@ -67,7 +67,7 @@ frozen = getattr(sys, 'frozen', '')
 
 if not frozen:
     # not frozen: in regular python interpreter
-    scriptDir = ConvertPath(os.path.abspath(sys.argv[0],0,1))
+    scriptDir = ConvertPath(os.path.abspath(sys.argv[0]),0,1)
 
 elif frozen in ('dll', 'console_exe', 'windows_exe'):
     # py2exe:
