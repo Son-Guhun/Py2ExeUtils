@@ -23,7 +23,7 @@ from Compiler import Compiler
 import globalvars
 
 class version:
-    major = 1
+    major = 2
     minor = 0
     patch = 0
     
