@@ -1,5 +1,10 @@
 import subprocess
 import shutil
+import os
+
+from .globalvars import DIRECTORY
+from . import path
+
 class Compiler:
     """
     Easily compile your script and copy any relevant files into the distribution
@@ -21,14 +26,14 @@ class Compiler:
     _fullSourcePath = _distributionFolder + _sourceFolder
     distUtilsArgs = []
     
-    def changeFolderNames(self,dist='dist/',src='src/'):
+    def changeFolderNames(self,dist='dist\\',src='src\\'):
         """
         Changes the path of the distutils directory when compiling with py2exe
         and/or the path of the directory which contains the distributed source
         files.
         """
-        self._distributionFolder = ConvertPath(dist)
-        self._sourceFolder = ConvertPath(src)
+        self._distributionFolder = path.relative(os.path.abspath(DIRECTORY + dist))
+        self._sourceFolder = path.relative(os.path.abspath(self._distributionFolder + src))
         self._fullSourcePath = self._distributionFolder + self._sourceFolder
     
     
@@ -42,10 +47,10 @@ class Compiler:
     @staticmethod
     def _CopyFiles(fileNameList,destinationDirectory):
         for fileName in fileNameList:
-            directories = fileName.split("/")[:-1]
+            directories = fileName.split(os.path.sep)[:-1]
             path = destinationDirectory
             for directory in directories:
-                path += directory+'/'
+                path += directory+os.path.sep
                 if not os.path.exists(path):
                     os.makedirs(path)
             if os.path.exists(destinationDirectory+fileName):
